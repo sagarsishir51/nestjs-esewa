@@ -50,8 +50,10 @@ export class YourService {
             transactionUuid: 'random uuid of txn',
             successUrl: 'success return url of frontend',
             failureUrl: 'failure return url of frontend'
-    };
-    await this.esewaService.init(esewaRequestDto);
+        };
+        const initData = await this.esewaService.init(esewaRequestDto);
+        //...use initData where required as use case
+    
   }
 }
 ```

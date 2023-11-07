@@ -1,6 +1,6 @@
 {
   "name": "@dallotech/nestjs-esewa",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is simple wrapper for Esewa Payment. It supports Epay-V2 and transaction verification for Esewa SDK, but later more will be added. Just ping us or open pull request and contribute :)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
