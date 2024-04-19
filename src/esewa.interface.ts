@@ -3,7 +3,7 @@ import {FactoryProvider, ModuleMetadata} from "@nestjs/common";
 export const ESEWA_CONFIG_OPTIONS = 'ESEWA_CONFIG_OPTIONS'
 export const ESEWA_PAYMENT_TEST_URL = 'https://rc-epay.esewa.com.np/api/epay/main/v2/form'
 export const ESEWA_PAYMENT_URL = 'https://rc-epay.esewa.com.np/api/epay/main/v2/form'
-export const ESEWA_VALIDATE_TEST_URL = 'https://epay.esewa.com.np/api/epay/transaction/status/'
+export const ESEWA_VALIDATE_TEST_URL = 'https://uat.esewa.com.np/api/epay/transaction/status/'
 export const ESEWA_VALIDATE_URL = 'https://epay.esewa.com.np/api/epay/transaction/status/'
 export const ESEWA_VALIDATE_MOBILE_URL = 'https://esewa.com.np/mobile/transaction'
 
