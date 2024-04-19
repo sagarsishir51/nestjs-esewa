@@ -103,6 +103,11 @@ export class EsewaService {
             throw new BadRequestException('Data missing for validating eSewa payment');
         }
         const jsonData = EsewaService.decodeBase64ToJson(encodedData);
+        /**
+         * total_amount field contains comma which needs to be removed before generating signature
+         * so that signature generated in server matches with the signature from encoded data
+         */
+        jsonData['total_amount'] = jsonData['total_amount']?.replace(',','');
         const {product_code, total_amount, transaction_uuid, signature, signed_field_names} = jsonData;
         const signedFieldNameList = signed_field_names.split(',');
         const message = EsewaService.getMessage(signedFieldNameList, jsonData);
