@@ -1,6 +1,6 @@
 {
   "name": "nestjs-esewa",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is simple wrapper for Esewa Payment extended from @dallotech/nestjs-esewa. It supports Epay-V2 and transaction verification for Esewa SDK, but later more will be added. Just ping us or open pull request and contribute :)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,6 +16,10 @@
   ],
   "author": "Sagar Bhusal",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sagarsishir51/nestjs-esewa"
+  },
   "dependencies": {
     "@nestjs/axios": "^3.1.3",
     "crypto-js": "^4.2.0",

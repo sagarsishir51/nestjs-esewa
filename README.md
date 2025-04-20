@@ -1,16 +1,17 @@
 ## Introduction
-This is simple wrapper for Esewa Payment. It supports Epay-V2 and transaction verification for Esewa SDK, but later more will be added. Just ping us or open pull request and contribute :)
+This is a simple wrapper for Esewa Payment extended from [@dallotech/nestjs-esewa](https://github.com/DalloTech/nestjs-esewa). It supports Epay-V2 and transaction verification for the Esewa SDK, but more will be added later. Just ping us or open a pull request and contribute :)
+
 ## Installation
 
 ```bash
-$ npm i --save @dallotech/nestjs-esewa 
-$ yarn add @dallotech/nestjs-esewa 
+$ npm i --save nestjs-esewa 
+$ yarn add nestjs-esewa 
 ```
 
 #### Importing module Async
 
 ```typescript
-import { EsewaModule } from '@dallotech/nestjs-esewa';
+import { EsewaModule } from 'nestjs-esewa';
 @Module({
   imports: [
       EsewaModule.registerAsync({
@@ -33,7 +34,7 @@ export class YourModule {}
 #### Calling Init Method to initialize payment
 
 ```typescript
-import { EsewaService,EsewaRequestDto } from '@dallotech/nestjs-esewa';
+import { EsewaService,EsewaRequestDto } from 'nestjs-esewa';
 
 @Injectable()
 export class YourService {
@@ -61,7 +62,7 @@ export class YourService {
 #### Calling Verify Method for Epay-V2
 
 ```typescript
-import { EsewaService } from '@dallotech/nestjs-esewa';
+import { EsewaService } from 'nestjs-esewa';
 
 @Injectable()
 export class YourService {
@@ -79,7 +80,7 @@ export class YourService {
 #### Calling Verify Method for Esewa SDK
 
 ```typescript
-import { EsewaService,SparrowSmsRequestDto } from '@dallotech/nestjs-esewa';
+import { EsewaService,SparrowSmsRequestDto } from 'nestjs-esewa';
 
 @Injectable()
 export class YourService {
