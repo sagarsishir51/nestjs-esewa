@@ -17,13 +17,15 @@ describe('EsewaService', () => {
     });
 
     it('should verify data', async () => {
-        const data = await esewaService.verify({encodedData:"eyJ0cmFuc2FjdGlvbl9jb2RlIjoiMDAwN0JHNSIsInN0YXR1cyI6IkNPTVBMRVRFIiwidG90YWxfYW1vdW50IjoiNSwwMDAuMCIsInRyYW5zYWN0aW9uX3V1aWQiOiIzODciLCJwcm9kdWN0X2NvZGUiOiJFUEFZVEVTVCIsInNpZ25lZF9maWVsZF9uYW1lcyI6InRyYW5zYWN0aW9uX2NvZGUsc3RhdHVzLHRvdGFsX2Ftb3VudCx0cmFuc2FjdGlvbl91dWlkLHByb2R1Y3RfY29kZSxzaWduZWRfZmllbGRfbmFtZXMiLCJzaWduYXR1cmUiOiIwMG9ucFhucE5wMTJBSUV4amRvdWZXN2JxcmJGaCt5K0NZekxlc3VHWWZRPSJ9"});
+        const data = await esewaService.verify({encodedData:
+            "eyJ0cmFuc2FjdGlvbl9jb2RlIjoiMDAwQUNJUSIsInN0YXR1cyI6IkNPTVBMRVRFIiwidG90YWxfYW1vdW50IjoiMS4wIiwidHJhbnNhY3Rpb25fdXVpZCI6IlRFU1RfSUQyNCIsInByb2R1Y3RfY29kZSI6IkVQQVlURVNUIiwic2lnbmVkX2ZpZWxkX25hbWVzIjoidHJhbnNhY3Rpb25fY29kZSxzdGF0dXMsdG90YWxfYW1vdW50LHRyYW5zYWN0aW9uX3V1aWQscHJvZHVjdF9jb2RlLHNpZ25lZF9maWVsZF9uYW1lcyIsInNpZ25hdHVyZSI6IkhMRzFic1kvK0h2SkVaNUQyMzdhbFF6K21NODNQeVdwSkxneVJQZ3l0c2c9In0="
+        });
 
-        console.log("data",data?.data);
-        expect(data?.data).toBeDefined();
-        expect(data?.data).toHaveProperty("status")
-        expect(data?.data).toHaveProperty("ref_id")
-        expect(data?.data).toHaveProperty("transaction_uuid")
-        expect(data?.data).toHaveProperty("total_amount")
+        console.log("data",data);
+        expect(data).toBeDefined();
+        expect(data).toHaveProperty("status")
+        expect(data).toHaveProperty("refId")
+        expect(data).toHaveProperty("transactionUuid")
+        expect(data).toHaveProperty("totalAmount")
     });
 })

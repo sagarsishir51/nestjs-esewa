@@ -54,6 +54,8 @@ export interface EsewaDto {
     signed_field_names: string;
     //hmac signature generated through above process.
     signature: string;
+
+    payment_url: string;
 }
 
 export interface EsewaOptions {
@@ -67,6 +69,14 @@ export interface EsewaOptions {
     paymentMode: PaymentMode;
     merchantId?: string;
     merchantSecret?: string;
+}
+
+export interface EsewaResponseDto {
+    productCode: string;
+    transactionUuid: string;
+    totalAmount: string;
+    status: string;
+    refId: string;
 }
 
 

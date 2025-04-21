@@ -8,7 +8,7 @@ import {
     ESEWA_VALIDATE_URL,
     EsewaDto,
     EsewaOptions,
-    EsewaRequestDto,
+    EsewaRequestDto, EsewaResponseDto,
     PaymentMode
 } from "./esewa.interface";
 import {HttpService} from "@nestjs/axios";
@@ -58,7 +58,7 @@ export class EsewaService {
         return JSON.parse(decodedData);
     }
 
-    init(data: EsewaRequestDto) {
+    init(data: EsewaRequestDto):EsewaDto {
         let {
             amount, productServiceCharge = 0, productDeliveryCharge = 0, taxAmount = 0, totalAmount, transactionUuid,
             successUrl, failureUrl
@@ -85,45 +85,63 @@ export class EsewaService {
             success_url: successUrl,           // Success URL
             failure_url: failureUrl,         // Failure URL
             signed_field_names: fieldNameString,
-            signature: hashInBase64
-        };
-
-        return {
-            ...esewaData,
+            signature: hashInBase64,
             payment_url:
                 this.paymentMode.localeCompare(PaymentMode.TEST) == 0
                     ? this.paymentUrlTest
-                    : this.paymentUrl,
+                    : this.paymentUrl
         };
+        return esewaData;
+
     }
 
-    async verify(data: any) {
+    async verify(data: any):Promise<EsewaResponseDto> {
         const {encodedData} = data;
         if (!encodedData) {
             throw new BadRequestException('Data missing for validating eSewa payment');
         }
-        const jsonData = EsewaService.decodeBase64ToJson(encodedData);
+        let jsonData: any;
+        try {
+            jsonData = EsewaService.decodeBase64ToJson(encodedData);
+        } catch (error) {
+            throw new BadRequestException('Invalid encodedData format.');
+        }
+
         /**
          * total_amount field contains comma which needs to be removed before generating signature
          * so that signature generated in server matches with the signature from encoded data
          */
-        jsonData['total_amount'] = jsonData['total_amount']?.replace(',','');
+        jsonData['total_amount'] = jsonData['total_amount']?.replace(',', '');
         const {product_code, total_amount, transaction_uuid, signature, signed_field_names} = jsonData;
         const signedFieldNameList = signed_field_names.split(',');
         const message = EsewaService.getMessage(signedFieldNameList, jsonData);
         const serverSignature = this.generateSignature(message);
-        if (signature.localeCompare(serverSignature) != 0) {
-            throw new BadRequestException('Signature mismatch for validating eSewa payment');
+        if (signature.localeCompare(serverSignature) !== 0) {
+            throw new BadRequestException('Signature mismatch during eSewa payment validation.');
         }
         const validateUrl =
             this.paymentMode.localeCompare('TEST') == 0
                 ? this.validateUrlTest
                 : this.validateUrl;
-        return await firstValueFrom(
-            this.httpService.get(
-                `${validateUrl}?product_code=${this.productCode}&total_amount=${total_amount}&transaction_uuid=${transaction_uuid}`,
-            ),
-        );
+        try {
+            const response = await firstValueFrom(
+                this.httpService.get(
+                    `${validateUrl}?product_code=${this.productCode}&total_amount=${total_amount}&transaction_uuid=${transaction_uuid}`,
+                ),
+            );
+            if (response?.status == 200 && response.data) {
+                return {
+                    productCode: response?.data?.product_code,
+                    transactionUuid: response?.data?.transaction_uuid,
+                    totalAmount: response?.data?.total_amount,
+                    refId: response?.data?.ref_id,
+                    status: response?.data?.status,
+                }
+            }
+            throw new InternalServerErrorException('Unexpected response from eSewa verification endpoint.');
+        }catch (error:any) {
+            throw new InternalServerErrorException(`Error in payment verification \n ${error?.message}`);
+        }
     }
 
     async verifyMobile(data: any) {
