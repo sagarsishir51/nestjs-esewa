@@ -74,7 +74,7 @@ export interface EsewaOptions {
 export interface EsewaResponseDto {
     productCode: string;
     transactionUuid: string;
-    totalAmount: string;
+    totalAmount: number;
     status: string;
     refId: string;
 }
